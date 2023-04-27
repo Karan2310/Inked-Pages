@@ -43,7 +43,7 @@ export default function Login(PaperProps) {
     },
   });
 
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(["token", "userId"]);
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -57,6 +57,12 @@ export default function Login(PaperProps) {
         message: `Welcome ${data.name}`,
       });
       setCookie("token", data.token, {
+        path: "/",
+        maxAge: 604800,
+        expires: new Date(Date.now() + 604800),
+        sameSite: true,
+      });
+      setCookie("userId", data.id, {
         path: "/",
         maxAge: 604800,
         expires: new Date(Date.now() + 604800),

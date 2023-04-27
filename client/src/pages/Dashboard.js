@@ -7,7 +7,10 @@ const Dashboard = () => {
   const [user, setUser] = useState({});
   const Navigate = useNavigate();
 
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, removeCookie, removeCookies] = useCookies([
+    "token",
+    "userId",
+  ]);
 
   const getUser = async () => {
     try {
@@ -39,6 +42,7 @@ const Dashboard = () => {
       <button
         onClick={() => {
           removeCookie("token");
+          removeCookie("userId");
           window.location.href = "/login";
         }}
       >

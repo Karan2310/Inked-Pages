@@ -1,8 +1,9 @@
 import express, { json } from "express";
-import authRoutes from "./routes/auth.js";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import authRoutes from "./routes/auth.js";
+import BlogRoutes from "./routes/blogs.js";
 
 const app = express();
 dotenv.config();
@@ -18,6 +19,7 @@ app.listen(8001, () => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/blogs", BlogRoutes);
 
 try {
   await mongoose.connect(process.env.MONGO_URL, {
