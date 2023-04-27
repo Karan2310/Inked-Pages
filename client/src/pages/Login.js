@@ -56,7 +56,12 @@ export default function Login(PaperProps) {
         icon: <IconCheck />,
         message: `Welcome ${data.name}`,
       });
-      setCookie("token", data.token, { path: "/" });
+      setCookie("token", data.token, {
+        path: "/",
+        maxAge: 604800,
+        expires: new Date(Date.now() + 604800),
+        sameSite: true,
+      });
       setTimeout(() => {
         Navigate("/");
       }, 3000);
