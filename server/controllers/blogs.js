@@ -55,3 +55,23 @@ export const deleteBlog = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+export const getBlog = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const blog = await Blog.findById(id);
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export const getMyBlogs = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const blogs = await Blog.find({ authorId: userId });
+    res.status(200).json(blogs);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

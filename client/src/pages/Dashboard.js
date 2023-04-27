@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { Button } from "@mantine/core";
+import ScreenTabs from "../components/ScreenTabs";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -36,19 +38,32 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <>
-      <h1>Dashboard</h1>
-      <h2>Welcome {user.name}</h2>
-      <button
-        onClick={() => {
-          removeCookie("token");
-          removeCookie("userId");
-          window.location.href = "/login";
-        }}
+    <div className="dashboard ">
+      <div
+        className="d-flex justify-content-between  align-items-center p-3 shadow"
+        style={{ backgroundColor: "#f5f5f5" }}
       >
-        Logout
-      </button>
-    </>
+        <h2 className="fw-semibold">Inked Pages</h2>
+        <Button
+          radius="md"
+          onClick={() => {
+            removeCookie("token");
+            removeCookie("userId");
+            window.location.href = "/login";
+          }}
+        >
+          Logout
+        </Button>
+      </div>
+      <div className="main-body p-3 mt-3">
+        <h3>
+          Welcome <span className="text-primary fw-semibold">{user.name},</span>
+        </h3>
+        <div className="mt-4">
+          <ScreenTabs />
+        </div>
+      </div>
+    </div>
   );
 };
 
