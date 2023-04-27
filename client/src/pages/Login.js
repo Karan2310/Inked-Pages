@@ -1,4 +1,4 @@
-import { useToggle, upperFirst } from "@mantine/hooks";
+import React, { useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
@@ -13,14 +13,24 @@ import {
   Stack,
 } from "@mantine/core";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { Notification } from "@mantine/core";
+import { IconCheck, IconX } from "@tabler/icons-react";
+import { Loader } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 export default function Login(PaperProps) {
+  const [loading, setLoading] = useState(false);
+  const [notificationVisible, setNotificationVisible] = useState({
+    visible: false,
+    type: "",
+    message: "",
+  });
+  const Navigate = useNavigate();
   const form = useForm({
     initialValues: {
       email: "",
-      name: "",
       password: "",
-      terms: true,
     },
 
     validate: {
@@ -32,8 +42,61 @@ export default function Login(PaperProps) {
     },
   });
 
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.post("/auth/login", values);
+      setNotificationVisible({
+        title: "LoggedIn successfully",
+        visible: true,
+        color: "green",
+        icon: <IconCheck />,
+        message: `Welcome ${data.name}`,
+      });
+      localStorage.setItem("token", data.token);
+      setTimeout(() => {
+        Navigate("/");
+      }, 3000);
+    } catch (err) {
+      console.log(err.response);
+      setNotificationVisible({
+        title: "Something went wrong",
+        visible: true,
+        color: "red",
+        icon: <IconX />,
+        message: err.response.data.msg,
+      });
+    }
+    setLoading(false);
+    setTimeout(() => {
+      setNotificationVisible({
+        visible: false,
+        type: "",
+        message: "",
+      });
+    }, 3000);
+  };
+
   return (
     <div className="login">
+      {notificationVisible.visible && (
+        <Notification
+          style={{ zIndex: 1000, position: "fixed", top: 20, right: 20 }}
+          title={notificationVisible.title}
+          color={notificationVisible.color}
+          icon={notificationVisible.icon}
+          onClose={() =>
+            setNotificationVisible({
+              visible: false,
+              type: "",
+              message: "",
+            })
+          }
+          withCloseButton
+        >
+          {notificationVisible.message}
+        </Notification>
+      )}
       <Paper
         radius="md"
         p="xl"
@@ -49,7 +112,12 @@ export default function Login(PaperProps) {
 
         <Divider my="lg"></Divider>
 
-        <form onSubmit={form.onSubmit(() => {})}>
+        <form
+          onSubmit={form.onSubmit((value) => {
+            handleSubmit(value);
+            // form.reset();
+          })}
+        >
           <Stack>
             <TextInput
               required
@@ -84,7 +152,7 @@ export default function Login(PaperProps) {
               New to Inked Pages? <NavLink to="/register">Register</NavLink>
             </Anchor>
             <Button type="submit" radius="xl">
-              Login
+              {loading ? <Loader color="orange" variant="dots" /> : "Login"}
             </Button>
           </Group>
         </form>

@@ -46,7 +46,7 @@ export default function Register(PaperProps) {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const { data } = await axios.post(`${SERVER_URL}/auth/register`, values);
+      const { data } = await axios.post("/auth/register", values);
       setNotificationVisible({
         title: "User created successfully",
         visible: true,
@@ -55,7 +55,7 @@ export default function Register(PaperProps) {
         message: data.message,
       });
       setTimeout(() => {
-        Navigate("/");
+        Navigate("/login");
       }, 3000);
     } catch (err) {
       setNotificationVisible({
@@ -158,7 +158,7 @@ export default function Register(PaperProps) {
 
           <Group position="apart" mt="xl">
             <Anchor component="button" type="button" color="dimmed" size="xs">
-              Already have an account? <NavLink to="/">Login</NavLink>
+              Already have an account? <NavLink to="/login">Login</NavLink>
             </Anchor>
             <Button type="submit" radius="xl">
               {loading ? <Loader color="orange" variant="dots" /> : "Register"}

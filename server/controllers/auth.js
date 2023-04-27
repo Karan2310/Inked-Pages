@@ -36,8 +36,35 @@ export const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid Credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {});
-    res.status(200).json({ id: user._id, email: user.email, token: token });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    res
+      .status(200)
+      .json({ id: user._id, name: user.name, email: user.email, token: token });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const verifyUser = async (req, res) => {
+  try {
+    const token = req.header("x-auth-token");
+    if (!token)
+      return res.status(401).json({ msg: "No token, authorization denied" });
+
+    try {
+      const verified = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(verified.id);
+      if (!user)
+        return res.status(401).json({ msg: "No user found with this token" });
+
+      res
+        .status(200)
+        .json({ id: user._id, name: user.name, email: user.email });
+    } catch (error) {
+      return res.status(401).json({ msg: "Token is not valid" });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
