@@ -18,6 +18,7 @@ import { Notification } from "@mantine/core";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { Loader } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function Login(PaperProps) {
   const [loading, setLoading] = useState(false);
@@ -42,6 +43,8 @@ export default function Login(PaperProps) {
     },
   });
 
+  const [cookies, setCookie] = useCookies(["token"]);
+
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
@@ -53,7 +56,7 @@ export default function Login(PaperProps) {
         icon: <IconCheck />,
         message: `Welcome ${data.name}`,
       });
-      localStorage.setItem("token", data.token);
+      setCookie("token", data.token, { path: "/" });
       setTimeout(() => {
         Navigate("/");
       }, 3000);
