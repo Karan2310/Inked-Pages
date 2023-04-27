@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import BlogCard from "../components/BlogCard";
 import { Grid } from "@mantine/core";
 
-const MyBlogs = ({ blogs }) => {
+const MyBlogs = ({ blogs, getBlogs }) => {
   const [cookies] = useCookies(["userId"]);
 
   const myBlogs = blogs.filter((blog) => {
@@ -25,6 +25,7 @@ const MyBlogs = ({ blogs }) => {
                 authorName={authorName}
                 createdAt={date}
                 authorId={authorId}
+                getBlogs={getBlogs}
               />
             );
           })}

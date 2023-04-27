@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import BlogCard from "../components/BlogCard";
 import { Grid } from "@mantine/core";
-const AllBlogs = ({ blogs }) => {
+const AllBlogs = ({ blogs, getBlogs }) => {
   return (
     <>
       <Grid>
@@ -19,6 +19,7 @@ const AllBlogs = ({ blogs }) => {
               authorName={authorName}
               createdAt={date}
               authorId={authorId}
+              getBlogs={getBlogs}
             />
           );
         })}

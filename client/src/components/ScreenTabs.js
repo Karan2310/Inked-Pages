@@ -49,11 +49,11 @@ const ScreenTabs = () => {
         </Tabs.List>
 
         <Tabs.Panel value="all" pt="xs">
-          <AllBlogs blogs={blogs} />
+          <AllBlogs blogs={blogs} getBlogs={getBlogs} />
         </Tabs.Panel>
 
         <Tabs.Panel value="my" pt="xs">
-          <MyBlogs blogs={blogs} />
+          <MyBlogs blogs={blogs} getBlogs={getBlogs} />
         </Tabs.Panel>
       </Tabs>
     </>

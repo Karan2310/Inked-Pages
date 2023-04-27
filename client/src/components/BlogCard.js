@@ -39,13 +39,23 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const BlogCard = ({ id, title, authorName, createdAt, desc, authorId }) => {
+const BlogCard = ({
+  id,
+  title,
+  authorName,
+  createdAt,
+  desc,
+  authorId,
+  getBlogs,
+}) => {
   const [cookies] = useCookies(["userId"]);
   const { classes, theme } = useStyles();
   const deletePost = (postId) => {
     try {
       axios.delete(`/blogs/${postId}`);
       alert("Blog deleted successfully");
+      // window.location.reload();
+      getBlogs();
     } catch (error) {
       console.log(error);
       alert("Error deleting blog");
