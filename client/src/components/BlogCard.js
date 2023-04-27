@@ -10,8 +10,15 @@ import {
   Badge,
   rem,
 } from "@mantine/core";
-import { IconHeart, IconBookmark, IconShare } from "@tabler/icons-react";
+import {
+  IconHeart,
+  IconBookmark,
+  IconShare,
+  IconTrash,
+} from "@tabler/icons-react";
 import { Grid } from "@mantine/core";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -32,8 +39,18 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const BlogCard = ({ _id, title, authorName, createdAt, desc }) => {
+const BlogCard = ({ id, title, authorName, createdAt, desc, authorId }) => {
+  const [cookies] = useCookies(["userId"]);
   const { classes, theme } = useStyles();
+  const deletePost = (postId) => {
+    try {
+      axios.delete(`/blogs/${postId}`);
+      alert("Blog deleted successfully");
+    } catch (error) {
+      console.log(error);
+      alert("Error deleting blog");
+    }
+  };
   return (
     <Grid.Col md={6} lg={4}>
       <Card withBorder padding="lg" radius="md" className={classes.card}>
@@ -62,15 +79,8 @@ const BlogCard = ({ _id, title, authorName, createdAt, desc }) => {
             <Text fz="xs" c="dimmed">
               {createdAt}
             </Text>
-            <Group spacing={0}>
-              <ActionIcon>
-                <IconHeart
-                  size="1.2rem"
-                  color={theme.colors.red[6]}
-                  stroke={1.5}
-                />
-              </ActionIcon>
-              <ActionIcon>
+            <Group spacing={3}>
+              {/* <ActionIcon>
                 <IconBookmark
                   size="1.2rem"
                   color={theme.colors.yellow[6]}
@@ -83,7 +93,16 @@ const BlogCard = ({ _id, title, authorName, createdAt, desc }) => {
                   color={theme.colors.blue[6]}
                   stroke={1.5}
                 />
-              </ActionIcon>
+              </ActionIcon> */}
+              {cookies.userId === authorId && (
+                <ActionIcon onClick={() => deletePost(id)}>
+                  <IconTrash
+                    size="1.2rem"
+                    color={theme.colors.red[6]}
+                    stroke={1.5}
+                  />
+                </ActionIcon>
+              )}
             </Group>
           </Group>
         </Card.Section>

@@ -7,7 +7,9 @@ const AllBlogs = ({ blogs }) => {
     <>
       <Grid>
         {blogs.map((blog) => {
-          const { _id, title, authorName, createdAt, desc } = blog;
+          const { _id, title, authorName, createdAt, desc, authorId } = blog;
+          const date = new Date(createdAt).toLocaleString();
+
           return (
             <BlogCard
               key={_id}
@@ -15,7 +17,8 @@ const AllBlogs = ({ blogs }) => {
               title={title}
               desc={desc}
               authorName={authorName}
-              createdAt={createdAt}
+              createdAt={date}
+              authorId={authorId}
             />
           );
         })}

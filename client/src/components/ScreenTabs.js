@@ -18,7 +18,6 @@ const ScreenTabs = () => {
     try {
       const { data } = await axios.get("/blogs");
       setBlogs(data);
-      console.log(blogs);
     } catch (err) {
       console.log(err);
     }
