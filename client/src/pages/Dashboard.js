@@ -4,10 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Button } from "@mantine/core";
 import ScreenTabs from "../components/ScreenTabs";
+import AddBlog from "../components/AddBlog";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
   const Navigate = useNavigate();
+  const [blogs, setBlogs] = useState([]);
+  const [fetch, setFetch] = useState(false);
+  const getBlogs = async () => {
+    try {
+      const { data } = await axios.get("/blogs");
+      setBlogs(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const [cookies, removeCookie, removeCookies] = useCookies([
     "token",
@@ -40,7 +51,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard ">
       <div
-        className="d-flex justify-content-between  align-items-center p-3 shadow"
+        className="d-flex justify-content-between  align-items-center p-4 shadow"
         style={{ backgroundColor: "#f5f5f5" }}
       >
         <h2 className="fw-semibold">Inked Pages</h2>
@@ -55,14 +66,15 @@ const Dashboard = () => {
           Logout
         </Button>
       </div>
-      <div className="main-body p-3 mt-3">
+      <div className="main-body p-4 mt-3">
         <h3>
           Welcome <span className="text-primary fw-semibold">{user.name},</span>
         </h3>
         <div className="mt-4">
-          <ScreenTabs />
+          <ScreenTabs getBlogs={getBlogs} blogs={blogs} fetch={fetch} />
         </div>
       </div>
+      <AddBlog fetch={fetch} setFetch={setFetch} />
     </div>
   );
 };

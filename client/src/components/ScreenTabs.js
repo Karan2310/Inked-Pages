@@ -12,20 +12,10 @@ import MyBlogs from "../pages/MyBlogs";
 import axios from "axios";
 import { Grid } from "@mantine/core";
 
-const ScreenTabs = () => {
-  const [blogs, setBlogs] = useState([]);
-  const getBlogs = async () => {
-    try {
-      const { data } = await axios.get("/blogs");
-      setBlogs(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+const ScreenTabs = ({ getBlogs, blogs, fetch }) => {
   useEffect(() => {
     getBlogs();
-  }, []);
+  }, [fetch]);
 
   return (
     <>
