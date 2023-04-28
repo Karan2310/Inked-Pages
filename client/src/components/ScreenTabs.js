@@ -11,12 +11,14 @@ import AllBlogs from "../pages/AllBlogs";
 import MyBlogs from "../pages/MyBlogs";
 import axios from "axios";
 import { Grid } from "@mantine/core";
+import { useCookies } from "react-cookie";
 
 const ScreenTabs = ({ getBlogs, blogs, fetch }) => {
   useEffect(() => {
     getBlogs();
   }, [fetch]);
 
+  const [cookies] = useCookies(["userId"]);
   return (
     <>
       <Tabs defaultValue="all">
@@ -31,10 +33,15 @@ const ScreenTabs = ({ getBlogs, blogs, fetch }) => {
           }}
         >
           <Tabs.Tab value="all" icon={<IconUsers size="0.8rem" />}>
-            All Blogs
+            All Blogs {`(${blogs.length})`}
           </Tabs.Tab>
           <Tabs.Tab value="my" icon={<IconUser size="0.8rem" />}>
-            My Blogs
+            My Blogs{" "}
+            {`(${
+              blogs.filter((blog) => {
+                return blog.authorId === cookies.userId;
+              }).length
+            })`}
           </Tabs.Tab>
         </Tabs.List>
 
