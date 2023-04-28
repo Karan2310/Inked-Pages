@@ -86,11 +86,11 @@ const ScreenTabs = ({ getBlogs, blogs, fetch, loading }) => {
         )}
 
         <Tabs.Panel value="all" pt="md">
-          <AllBlogs blogs={blogs} getBlogs={getBlogs} />
+          <AllBlogs blogs={blogs} getBlogs={getBlogs} loading={loading} />
         </Tabs.Panel>
 
         <Tabs.Panel value="my" pt="md">
-          <MyBlogs blogs={blogs} getBlogs={getBlogs} />
+          <MyBlogs blogs={blogs} getBlogs={getBlogs} loading={loading} />
         </Tabs.Panel>
       </Tabs>
     </>

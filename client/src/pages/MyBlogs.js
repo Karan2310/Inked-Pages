@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import BlogCard from "../components/BlogCard";
 import { Grid } from "@mantine/core";
 
-const MyBlogs = ({ blogs, getBlogs }) => {
+const MyBlogs = ({ blogs, getBlogs, loading }) => {
   const [cookies] = useCookies(["userId"]);
 
   const myBlogs = blogs.filter((blog) => {
@@ -11,8 +11,8 @@ const MyBlogs = ({ blogs, getBlogs }) => {
   });
   return (
     <>
-      {myBlogs.length === 0 && (
-        <div style={{ textAlign: "center", marginTop: "30%" }}>
+      {!loading && myBlogs && myBlogs.length === 0 && (
+        <div style={{ textAlign: "center", marginTop: "10%" }}>
           <h4
             style={{
               color: "#b5b5b5",
