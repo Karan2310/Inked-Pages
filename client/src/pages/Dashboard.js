@@ -11,13 +11,16 @@ const Dashboard = () => {
   const Navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
   const [fetch, setFetch] = useState(false);
+  const [loading, setLoading] = useState(false);
   const getBlogs = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get("/blogs");
       setBlogs(data);
     } catch (err) {
       console.log(err);
     }
+    setLoading(false);
   };
 
   const [cookies, removeCookie, removeCookies] = useCookies([
@@ -71,7 +74,12 @@ const Dashboard = () => {
           Welcome <span className="text-primary fw-semibold">{user.name},</span>
         </h3>
         <div className="mt-4">
-          <ScreenTabs getBlogs={getBlogs} blogs={blogs} fetch={fetch} />
+          <ScreenTabs
+            getBlogs={getBlogs}
+            blogs={blogs}
+            fetch={fetch}
+            loading={loading}
+          />
         </div>
       </div>
       <AddBlog fetch={fetch} setFetch={setFetch} />

@@ -24,11 +24,12 @@ const AddBlog = ({ fetch, setFetch }) => {
       const { data } = await axios.post(`/blogs/${cookies.userId}`, value);
       setFetch(!fetch);
       alert("Blog Added");
-      form.reset();
-      setOpened(false);
     } catch (err) {
+      alert("Error adding blog, try again");
       console.log(err);
     }
+    form.reset();
+    setOpened(false);
   };
 
   return (

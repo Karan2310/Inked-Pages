@@ -83,13 +83,13 @@ const BlogCard = ({
     try {
       const { data } = await axios.put(`/blogs/${id}`, value);
       alert("Blog Updated");
-      // window.location.reload();
       getBlogs();
-      form.reset();
-      setOpened(false);
     } catch (err) {
       console.log(err);
+      alert("Error updating blog, try again");
     }
+    form.reset();
+    setOpened(false);
   };
 
   return (

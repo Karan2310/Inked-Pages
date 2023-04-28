@@ -12,8 +12,9 @@ import MyBlogs from "../pages/MyBlogs";
 import axios from "axios";
 import { Grid } from "@mantine/core";
 import { useCookies } from "react-cookie";
+import { Skeleton } from "@mantine/core";
 
-const ScreenTabs = ({ getBlogs, blogs, fetch }) => {
+const ScreenTabs = ({ getBlogs, blogs, fetch, loading }) => {
   useEffect(() => {
     getBlogs();
   }, [fetch]);
@@ -44,6 +45,45 @@ const ScreenTabs = ({ getBlogs, blogs, fetch }) => {
             })`}
           </Tabs.Tab>
         </Tabs.List>
+
+        {loading && (
+          <>
+            <Grid mt={30}>
+              <Grid.Col md={6} lg={3}>
+                <Skeleton height={8} radius="xl" width="30%" mb={30} />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+              </Grid.Col>
+              <Grid.Col md={6} lg={3}>
+                <Skeleton height={8} radius="xl" width="30%" mb={30} />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+              </Grid.Col>
+              <Grid.Col md={6} lg={3}>
+                <Skeleton height={8} radius="xl" width="30%" mb={30} />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+              </Grid.Col>
+              <Grid.Col md={6} lg={3}>
+                <Skeleton height={8} radius="xl" width="30%" mb={30} />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} radius="xl" />
+                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+                <Skeleton height={8} mt={6} width="70%" radius="xl" />
+              </Grid.Col>
+            </Grid>
+          </>
+        )}
 
         <Tabs.Panel value="all" pt="md">
           <AllBlogs blogs={blogs} getBlogs={getBlogs} />
