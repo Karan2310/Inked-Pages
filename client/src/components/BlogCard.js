@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   createStyles,
   Card,
@@ -14,11 +14,14 @@ import {
   IconHeart,
   IconBookmark,
   IconShare,
+  IconPencil,
   IconTrash,
 } from "@tabler/icons-react";
 import { Grid } from "@mantine/core";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import { useForm } from "@mantine/form";
+import AppModal from "./AppModal";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -47,9 +50,22 @@ const BlogCard = ({
   desc,
   authorId,
   getBlogs,
+  updatedAt,
 }) => {
   const [cookies] = useCookies(["userId"]);
   const { classes, theme } = useStyles();
+
+  const [opened, setOpened] = useState(false);
+  const form = useForm({
+    initialValues: { title: "", desc: "" },
+
+    validate: {
+      title: (value) => (value.length < 2 ? "Title too Short" : null),
+      desc: (value) =>
+        value.length < 2 ? "Please add more description" : null,
+    },
+  });
+
   const deletePost = (postId) => {
     try {
       axios.delete(`/blogs/${postId}`);
@@ -61,6 +77,20 @@ const BlogCard = ({
       alert("Error deleting blog");
     }
   };
+
+  const updatePost = async (value) => {
+    try {
+      const { data } = await axios.put(`/blogs/${id}`, value);
+      alert("Blog Updated");
+      // window.location.reload();
+      getBlogs();
+      form.reset();
+      setOpened(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Grid.Col md={6} lg={4}>
       <Card withBorder padding="lg" radius="md" className={classes.card}>
@@ -89,29 +119,43 @@ const BlogCard = ({
             <Text fz="xs" c="dimmed">
               {createdAt}
             </Text>
-            <Group spacing={3}>
+            <Group spacing={10}>
               {/* <ActionIcon>
                 <IconBookmark
                   size="1.2rem"
                   color={theme.colors.yellow[6]}
                   stroke={1.5}
                 />
-              </ActionIcon>
-              <ActionIcon>
-                <IconShare
-                  size="1.2rem"
-                  color={theme.colors.blue[6]}
-                  stroke={1.5}
-                />
               </ActionIcon> */}
               {cookies.userId === authorId && (
-                <ActionIcon onClick={() => deletePost(id)}>
-                  <IconTrash
-                    size="1.2rem"
-                    color={theme.colors.red[6]}
-                    stroke={1.5}
+                <>
+                  <ActionIcon>
+                    <IconPencil
+                      size="1.2rem"
+                      color={theme.colors.blue[6]}
+                      stroke={1.5}
+                      onClick={() => {
+                        setOpened(true);
+                        form.setValues({ title, desc });
+                      }}
+                    />
+                  </ActionIcon>
+                  <AppModal
+                    opened={opened}
+                    setOpened={setOpened}
+                    title="Edit Blog"
+                    form={form}
+                    type="update"
+                    submitFunction={updatePost}
                   />
-                </ActionIcon>
+                  <ActionIcon onClick={() => deletePost(id)}>
+                    <IconTrash
+                      size="1.2rem"
+                      color={theme.colors.red[6]}
+                      stroke={1.5}
+                    />
+                  </ActionIcon>
+                </>
               )}
             </Group>
           </Group>

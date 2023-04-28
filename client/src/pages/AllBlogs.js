@@ -1,14 +1,32 @@
 import React from "react";
-import axios from "axios";
 import BlogCard from "../components/BlogCard";
 import { Grid } from "@mantine/core";
 const AllBlogs = ({ blogs, getBlogs }) => {
   return (
     <>
+      {blogs.length === 0 && (
+        <div style={{ textAlign: "center", marginTop: "30%" }}>
+          <h4
+            style={{
+              color: "#b5b5b5",
+            }}
+          >
+            No blogs found
+          </h4>
+        </div>
+      )}
       <Grid>
         {blogs.map((blog) => {
-          const { _id, title, authorName, createdAt, desc, authorId } = blog;
-          const date = new Date(createdAt).toLocaleString();
+          const {
+            _id,
+            title,
+            authorName,
+            createdAt,
+            desc,
+            authorId,
+            updatedAt,
+          } = blog;
+          const date = new Date(updatedAt).toLocaleString();
 
           return (
             <BlogCard

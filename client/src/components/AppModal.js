@@ -1,5 +1,12 @@
 import { useForm } from "@mantine/form";
-import { NumberInput, TextInput, Button, Box, Modal } from "@mantine/core";
+import {
+  NumberInput,
+  Textarea,
+  TextInput,
+  Button,
+  Box,
+  Modal,
+} from "@mantine/core";
 import React from "react";
 
 const AppModal = ({ opened, setOpened, title, form, type, submitFunction }) => {
@@ -11,7 +18,6 @@ const AppModal = ({ opened, setOpened, title, form, type, submitFunction }) => {
         title={title}
         onClose={() => setOpened(false)}
         closeOnEscape={false}
-        closeOnOverlayClick={false}
         radius={10}
         sx={{
           ".mantine-1k9itrp": {
@@ -31,7 +37,9 @@ const AppModal = ({ opened, setOpened, title, form, type, submitFunction }) => {
               placeholder="Add a title"
               {...form.getInputProps("title")}
             />
-            <TextInput
+            <Textarea
+              minRows={4}
+              maxRows={6}
               mt="sm"
               label="Description"
               placeholder="Add a description"
