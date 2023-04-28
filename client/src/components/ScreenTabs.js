@@ -38,11 +38,11 @@ const ScreenTabs = ({ getBlogs, blogs, fetch }) => {
           </Tabs.Tab>
         </Tabs.List>
 
-        <Tabs.Panel value="all" pt="xs">
+        <Tabs.Panel value="all" pt="md">
           <AllBlogs blogs={blogs} getBlogs={getBlogs} />
         </Tabs.Panel>
 
-        <Tabs.Panel value="my" pt="xs">
+        <Tabs.Panel value="my" pt="md">
           <MyBlogs blogs={blogs} getBlogs={getBlogs} />
         </Tabs.Panel>
       </Tabs>

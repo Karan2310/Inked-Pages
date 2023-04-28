@@ -26,6 +26,9 @@ const AllBlogs = ({ blogs, getBlogs }) => {
             authorId,
             updatedAt,
           } = blog;
+
+          const isEdited = createdAt !== updatedAt;
+
           const date = new Date(updatedAt).toLocaleString();
 
           return (
@@ -38,6 +41,7 @@ const AllBlogs = ({ blogs, getBlogs }) => {
               createdAt={date}
               authorId={authorId}
               getBlogs={getBlogs}
+              isEdited={isEdited}
             />
           );
         })}

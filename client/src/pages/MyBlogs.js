@@ -34,6 +34,7 @@ const MyBlogs = ({ blogs, getBlogs }) => {
               desc,
               authorId,
             } = blog;
+            const isEdited = createdAt !== updatedAt;
             const date = new Date(updatedAt).toLocaleString();
             return (
               <BlogCard
@@ -45,6 +46,7 @@ const MyBlogs = ({ blogs, getBlogs }) => {
                 createdAt={date}
                 authorId={authorId}
                 getBlogs={getBlogs}
+                isEdited={isEdited}
               />
             );
           })}

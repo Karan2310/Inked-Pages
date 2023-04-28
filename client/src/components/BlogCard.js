@@ -51,6 +51,7 @@ const BlogCard = ({
   authorId,
   getBlogs,
   updatedAt,
+  isEdited,
 }) => {
   const [cookies] = useCookies(["userId"]);
   const { classes, theme } = useStyles();
@@ -92,7 +93,7 @@ const BlogCard = ({
   };
 
   return (
-    <Grid.Col md={6} lg={4}>
+    <Grid.Col md={6} lg={3}>
       <Card withBorder padding="lg" radius="md" className={classes.card}>
         <Card.Section mb="sm">
           {/* <Image src={image} alt={title} height={180} /> */}
@@ -100,9 +101,16 @@ const BlogCard = ({
 
         {/* <Badge>Hhh</Badge> */}
 
-        <Text fw={700} className={classes.title} mt="xs">
-          {title}
-        </Text>
+        <Group position="apart" mt="md">
+          <Text fw={700} className={classes.title}>
+            {title}
+          </Text>
+          {isEdited && (
+            <Badge color="gray" radius="sm">
+              Edited
+            </Badge>
+          )}
+        </Group>
 
         <Group mt="lg">
           {/* <Avatar src={author.image} radius="sm" /> */}
