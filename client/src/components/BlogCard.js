@@ -102,14 +102,10 @@ const BlogCard = ({
         {/* <Badge>Hhh</Badge> */}
 
         <Group position="apart" mt="md">
-          <Text fw={700} className={classes.title}>
+          <Text fw={700} className={classes.title} maw={"70%"}>
             {title}
           </Text>
-          {isEdited && (
-            <Badge color="gray" radius="sm">
-              Edited
-            </Badge>
-          )}
+          {isEdited && <Badge size="sm">Edited</Badge>}
         </Group>
 
         <Group mt="lg">
