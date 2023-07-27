@@ -29,12 +29,23 @@ app.listen(8001, () => {
 app.use("/auth", authRoutes);
 app.use("/blogs", BlogRoutes);
 
-try {
-  await mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  console.log("MongoDB connected");
-} catch (error) {
-  console.log(error);
+async function startServer() {
+  try {
+    await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected");
+
+    app.listen(8001, () => {
+      console.log("Server listening on port 8001");
+    });
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
 }
+
+// Call the async function to start the server
+startServer().catch((error) => {
+  console.error("Error starting the server:", error);
+});
