@@ -12,7 +12,7 @@ app.use(json());
 
 app.use(
   cors({
-    origin: "https://inked-pages.vercel.app",
+    origin: "https://inked-pages-api.vercel.app/",
     methods: ["POST", "GET", "DELETE", "PATCH"],
     credentials: true,
   })
