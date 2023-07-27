@@ -39,9 +39,10 @@ const ScreenTabs = ({ getBlogs, blogs, fetch, loading }) => {
           <Tabs.Tab value="my" icon={<IconUser size="0.8rem" />}>
             My Blogs{" "}
             {`(${
-              blogs.filter((blog) => {
-                return blog.authorId === cookies.userId;
-              }).length
+              Array.isArray(blogs)
+                ? blogs.filter((blog) => blog.authorId === cookies.userId)
+                    .length
+                : 0
             })`}
           </Tabs.Tab>
         </Tabs.List>
