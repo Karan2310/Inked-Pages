@@ -1,1 +1,1 @@
-export const SERVER_URL = "http://192.168.1.16:8001";
+export const SERVER_URL = "https://inked-pages-api.vercel.app/";
