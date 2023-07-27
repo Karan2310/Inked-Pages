@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { Button } from "@mantine/core";
 import ScreenTabs from "../components/ScreenTabs";
 import AddBlog from "../components/AddBlog";
+import { SERVER_URL } from "../config";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -15,7 +16,7 @@ const Dashboard = () => {
   const getBlogs = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get("/blogs");
+      const { data } = await axios.get(`${SERVER_URL}/blogs`);
       setBlogs(data);
     } catch (err) {
       console.log(err);
@@ -39,7 +40,7 @@ const Dashboard = () => {
           "x-auth-token": cookies.token,
         },
       };
-      const { data } = await axios.get("/auth/verify", config);
+      const { data } = await axios.get(`${SERVER_URL}/auth/verify`, config);
       setUser(data);
     } catch (err) {
       removeCookie("token");

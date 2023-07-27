@@ -22,6 +22,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useForm } from "@mantine/form";
 import AppModal from "./AppModal";
+import { SERVER_URL } from "../config";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -69,7 +70,7 @@ const BlogCard = ({
 
   const deletePost = (postId) => {
     try {
-      axios.delete(`/blogs/${postId}`);
+      axios.delete(`${SERVER_URL}/blogs/${postId}`);
       alert("Blog deleted successfully");
       // window.location.reload();
       getBlogs();
@@ -81,7 +82,7 @@ const BlogCard = ({
 
   const updatePost = async (value) => {
     try {
-      const { data } = await axios.put(`/blogs/${id}`, value);
+      const { data } = await axios.put(`${SERVER_URL}/blogs/${id}`, value);
       alert("Blog Updated");
       getBlogs();
     } catch (err) {

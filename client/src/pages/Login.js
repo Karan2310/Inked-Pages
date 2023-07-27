@@ -19,6 +19,7 @@ import { IconCheck, IconX } from "@tabler/icons-react";
 import { Loader } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { SERVER_URL } from "../config";
 
 export default function Login(PaperProps) {
   const [loading, setLoading] = useState(false);
@@ -48,7 +49,7 @@ export default function Login(PaperProps) {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const { data } = await axios.post("/auth/login", values);
+      const { data } = await axios.post(`${SERVER_URL}/auth/login`, values);
       setNotificationVisible({
         title: "LoggedIn successfully",
         visible: true,

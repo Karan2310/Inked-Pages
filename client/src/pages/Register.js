@@ -46,7 +46,7 @@ export default function Register(PaperProps) {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const { data } = await axios.post("/auth/register", values);
+      const { data } = await axios.post(`${SERVER_URL}/auth/register`, values);
       setNotificationVisible({
         title: "User created successfully",
         visible: true,

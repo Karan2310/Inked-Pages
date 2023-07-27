@@ -5,6 +5,7 @@ import { useForm } from "@mantine/form";
 import { NumberInput, TextInput, Button, Box } from "@mantine/core";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { SERVER_URL } from "../config";
 
 const AddBlog = ({ fetch, setFetch }) => {
   const [opened, setOpened] = useState(false);
@@ -21,7 +22,11 @@ const AddBlog = ({ fetch, setFetch }) => {
 
   const addBlog = async (value) => {
     try {
-      const { data } = await axios.post(`/blogs/${cookies.userId}`, value);
+      // const { data } = await axios.post(`/blogs/${cookies.userId}`, value);
+      const { data } = await axios.post(
+        `${SERVER_URL}/blogs/${cookies.userId}`,
+        value
+      );
       setFetch(!fetch);
       alert("Blog Added");
     } catch (err) {
