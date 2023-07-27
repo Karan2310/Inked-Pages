@@ -2,6 +2,7 @@ import React from "react";
 import BlogCard from "../components/BlogCard";
 import { Grid } from "@mantine/core";
 const AllBlogs = ({ blogs, getBlogs, loading }) => {
+  const blogArray = Array.isArray(blogs) ? blogs : [];
   return (
     <>
       {!loading && blogs && blogs.length === 0 && (
