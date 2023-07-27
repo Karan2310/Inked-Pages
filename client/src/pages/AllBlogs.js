@@ -5,7 +5,7 @@ const AllBlogs = ({ blogs, getBlogs, loading }) => {
   const blogArray = Array.isArray(blogs) ? blogs : [];
   return (
     <>
-      {!loading && blogs && blogs.length === 0 && (
+      {!loading && blogArray.length === 0 && (
         <div style={{ textAlign: "center", marginTop: "10%" }}>
           <h4
             style={{
@@ -18,7 +18,7 @@ const AllBlogs = ({ blogs, getBlogs, loading }) => {
       )}
       {!loading && (
         <Grid>
-          {blogs.map((blog) => {
+          {blogArray.map((blog) => {
             const {
               _id,
               title,
