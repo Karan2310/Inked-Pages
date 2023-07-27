@@ -10,6 +10,14 @@ dotenv.config();
 app.use(cors());
 app.use(json());
 
+app.use(
+  cors({
+    origin: "https://inked-pages.vercel.app",
+    methods: ["POST", "GET", "DELETE", "PATCH"],
+    credentials: true,
+  })
+);
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
