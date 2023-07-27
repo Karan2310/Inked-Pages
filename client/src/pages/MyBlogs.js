@@ -6,7 +6,7 @@ import { Grid } from "@mantine/core";
 const MyBlogs = ({ blogs, getBlogs, loading }) => {
   const [cookies] = useCookies(["userId"]);
 
-  // Check if blogs is not an array or is null/undefined, then provide an empty array as a fallback value
+  // Check if 'blogs' prop is an array
   const myBlogs = Array.isArray(blogs)
     ? blogs.filter((blog) => blog.authorId === cookies.userId)
     : [];
@@ -26,7 +26,30 @@ const MyBlogs = ({ blogs, getBlogs, loading }) => {
       )}
       <Grid>
         {myBlogs.map((blog) => {
-          // ... (rest of the code)
+          const {
+            _id,
+            title,
+            authorName,
+            createdAt,
+            updatedAt,
+            desc,
+            authorId,
+          } = blog;
+          const isEdited = createdAt !== updatedAt;
+          const date = new Date(updatedAt).toLocaleString();
+          return (
+            <BlogCard
+              key={_id}
+              id={_id}
+              title={title}
+              desc={desc}
+              authorName={authorName}
+              createdAt={date}
+              authorId={authorId}
+              getBlogs={getBlogs}
+              isEdited={isEdited}
+            />
+          );
         })}
       </Grid>
     </>
