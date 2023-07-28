@@ -10,6 +10,7 @@ import { SERVER_URL } from "../config";
 const AddBlog = ({ fetch, setFetch }) => {
   const [opened, setOpened] = useState(false);
   const [cookies] = useCookies(["userId"]);
+  const [loading, setLoading] = useState(false);
   const form = useForm({
     initialValues: { title: "", desc: "" },
 
@@ -21,20 +22,20 @@ const AddBlog = ({ fetch, setFetch }) => {
   });
 
   const addBlog = async (value) => {
+    setLoading(true);
     try {
-      // const { data } = await axios.post(`/blogs/${cookies.userId}`, value);
       const { data } = await axios.post(
         `${SERVER_URL}/blogs/${cookies.userId}`,
         value
       );
       setFetch(!fetch);
-      alert("Blog Added");
     } catch (err) {
       alert("Error adding blog, try again");
       console.log(err);
     }
-    form.reset();
+    setLoading(false);
     setOpened(false);
+    form.reset();
   };
 
   return (
@@ -47,6 +48,7 @@ const AddBlog = ({ fetch, setFetch }) => {
         <IconPlus size={30} />
       </button>
       <AppModal
+        loading={loading}
         opened={opened}
         setOpened={setOpened}
         title="Add a Blog"

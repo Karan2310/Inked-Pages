@@ -56,6 +56,7 @@ const BlogCard = ({
 }) => {
   const [cookies] = useCookies(["userId"]);
   const { classes, theme } = useStyles();
+  const [loading, setLoading] = useState(false);
 
   const [opened, setOpened] = useState(false);
   const form = useForm({
@@ -81,14 +82,15 @@ const BlogCard = ({
   };
 
   const updatePost = async (value) => {
+    setLoading(true);
     try {
       const { data } = await axios.put(`${SERVER_URL}/blogs/${id}`, value);
-      alert("Blog Updated");
       getBlogs();
     } catch (err) {
       console.log(err);
       alert("Error updating blog, try again");
     }
+    setLoading(false);
     form.reset();
     setOpened(false);
   };
@@ -146,6 +148,7 @@ const BlogCard = ({
                     />
                   </ActionIcon>
                   <AppModal
+                    loading={loading}
                     opened={opened}
                     setOpened={setOpened}
                     title="Edit Blog"

@@ -5,11 +5,20 @@ import {
   TextInput,
   Button,
   Box,
+  Loader,
   Modal,
 } from "@mantine/core";
 import React from "react";
 
-const AppModal = ({ opened, setOpened, title, form, type, submitFunction }) => {
+const AppModal = ({
+  opened,
+  setOpened,
+  title,
+  form,
+  type,
+  submitFunction,
+  loading,
+}) => {
   return (
     <>
       <Modal
@@ -46,7 +55,13 @@ const AppModal = ({ opened, setOpened, title, form, type, submitFunction }) => {
               {...form.getInputProps("desc")}
             />
             <Button type="submit" mt="lg" fullWidth>
-              {type === "add" ? "Post" : "Update"}
+              {loading ? (
+                <Loader color="white" variant="dots" />
+              ) : type === "add" ? (
+                "Post"
+              ) : (
+                "Update"
+              )}
             </Button>
           </form>
         </Box>
