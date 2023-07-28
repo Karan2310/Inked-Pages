@@ -60,6 +60,22 @@ const Dashboard = () => {
     }
   };
 
+  const UpdateUserName = async (value) => {
+    setLoading(true);
+    console.log(value);
+    try {
+      const { data } = await axios.put(`${SERVER_URL}/profile/${user.id}`, {
+        name: value.name,
+      });
+      user.name = data.name;
+    } catch (err) {
+      alert(err.response.data.error);
+      console.log(err);
+    }
+    setLoading(false);
+    close();
+  };
+
   useEffect(() => {
     getUser();
   }, []);
@@ -85,20 +101,21 @@ const Dashboard = () => {
       <div className="main-body p-4 mt-3">
         <div className="d-flex align-items-center">
           <h3>
-            Welcome{" "}
+            <b>Welcome</b>{" "}
             <span className="text-primary fw-semibold">{user.name},</span>
           </h3>
-          <ActionIcon>
+          <ActionIcon
+            className="ms-2"
+            onClick={() => {
+              form.setValues({ name: user.name });
+              open();
+            }}
+          >
             <IconEdit
               size="1.2rem"
               color={"#0C6DFD"}
               stroke={1.5}
-              className="ms-2"
               cursor={"pointer"}
-              onClick={() => {
-                form.setValues({ name: user.name });
-                open();
-              }}
             />
           </ActionIcon>
         </div>
@@ -128,8 +145,7 @@ const Dashboard = () => {
         <Box mx="auto">
           <form
             onSubmit={form.onSubmit((value) => {
-              console.log(value);
-              // submitFunction(value);
+              UpdateUserName(value);
             })}
           >
             <TextInput
