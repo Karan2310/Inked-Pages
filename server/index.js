@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.js";
 import BlogRoutes from "./routes/blogs.js";
+import User from "./models/User.js";
 
 const app = express();
 dotenv.config();
@@ -24,6 +25,27 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/blogs", BlogRoutes);
+
+app.put("/profile/:id", async (req, res) => {
+  const id = req.params.id;
+  const { name } = req.body;
+  if (!name || name.trim() === "") {
+    return res.status(400).json({ error: "Name must not be empty." });
+  }
+  try {
+    const updateUserName = await User.findByIdAndUpdate(
+      id,
+      { name },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found." });
+    }
+    res.status(200).json(updateUserName);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 async function startServer() {
   try {
