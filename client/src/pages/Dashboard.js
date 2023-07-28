@@ -24,10 +24,7 @@ const Dashboard = () => {
     setLoading(false);
   };
 
-  const [cookies, removeCookie, removeCookies] = useCookies([
-    "token",
-    "userId",
-  ]);
+  const [cookies, removeCookie] = useCookies(["token", "userId"]);
 
   const getUser = async () => {
     try {
@@ -44,6 +41,7 @@ const Dashboard = () => {
       setUser(data);
     } catch (err) {
       removeCookie("token");
+      alert("You have been logged out!");
       Navigate("/login");
     }
   };
