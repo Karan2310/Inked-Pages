@@ -10,7 +10,7 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: "https://inked-pages.vercel.app",
+    origin: ["https://inked-pages.vercel.app", "http://localhost:3000"],
     methods: ["POST", "GET", "DELETE", "PATCH", "PUT"],
     credentials: true,
   })
