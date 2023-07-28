@@ -10,13 +10,7 @@ import {
   Badge,
   rem,
 } from "@mantine/core";
-import {
-  IconHeart,
-  IconBookmark,
-  IconShare,
-  IconPencil,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconPencil, IconTrash } from "@tabler/icons-react";
 import { Grid } from "@mantine/core";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -51,7 +45,6 @@ const BlogCard = ({
   desc,
   authorId,
   getBlogs,
-  updatedAt,
   isEdited,
 }) => {
   const [cookies] = useCookies(["userId"]);
@@ -101,8 +94,6 @@ const BlogCard = ({
         <Card.Section mb="sm">
           {/* <Image src={image} alt={title} height={180} /> */}
         </Card.Section>
-
-        {/* <Badge>Hhh</Badge> */}
 
         <Group position="apart" mt="md">
           <Text fw={700} className={classes.title} maw={"70%"}>

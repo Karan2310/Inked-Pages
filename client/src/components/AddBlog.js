@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { IconPlus } from "@tabler/icons-react";
 import AppModal from "./AppModal";
 import { useForm } from "@mantine/form";
-import { NumberInput, TextInput, Button, Box } from "@mantine/core";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { SERVER_URL } from "../config";
