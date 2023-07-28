@@ -83,6 +83,7 @@ export default function Login(PaperProps) {
       });
     }
     setLoading(false);
+    form.reset();
     setTimeout(() => {
       setNotificationVisible({
         visible: false,
@@ -117,7 +118,7 @@ export default function Login(PaperProps) {
         p="xl"
         withBorder
         sx={{
-          width: "100%",
+          width: "80%",
           maxWidth: 450,
         }}
       >
@@ -167,7 +168,7 @@ export default function Login(PaperProps) {
               New to Inked Pages? <NavLink to="/register">Register</NavLink>
             </Anchor>
             <Button type="submit" radius="xl">
-              {loading ? <Loader color="orange" variant="dots" /> : "Login"}
+              {loading ? <Loader color="white" variant="dots" /> : "Login"}
             </Button>
           </Group>
         </form>
