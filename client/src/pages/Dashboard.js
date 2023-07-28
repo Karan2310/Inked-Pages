@@ -7,7 +7,14 @@ import ScreenTabs from "../components/ScreenTabs";
 import { IconEdit } from "@tabler/icons-react";
 import AddBlog from "../components/AddBlog";
 import { SERVER_URL } from "../config";
-import { ActionIcon, Modal, Box, TextInput, Loader } from "@mantine/core";
+import {
+  ActionIcon,
+  Tooltip,
+  Modal,
+  Box,
+  TextInput,
+  Loader,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 
@@ -99,11 +106,22 @@ const Dashboard = () => {
         </Button>
       </div>
       <div className="main-body p-4 mt-3">
-        <div className="d-flex align-items-center">
-          <h3>
-            <b>Welcome</b>{" "}
-            <span className="text-primary fw-semibold">{user.name},</span>
-          </h3>
+        <div
+          className="d-flex align-items-center"
+          style={{ cursor: "default" }}
+        >
+          <Tooltip.Floating
+            label={user.email}
+            color="dark"
+            position="bottom"
+            withArrow
+            transitionProps={{ transition: "pop", duration: 200 }}
+          >
+            <h3>
+              <b>Welcome</b>{" "}
+              <span className="text-primary fw-semibold">{user.name},</span>
+            </h3>
+          </Tooltip.Floating>
           <ActionIcon
             className="ms-2"
             onClick={() => {
