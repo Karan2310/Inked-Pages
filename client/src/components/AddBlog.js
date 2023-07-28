@@ -14,9 +14,9 @@ const AddBlog = ({ fetch, setFetch }) => {
     initialValues: { title: "", desc: "" },
 
     validate: {
-      title: (value) => (value.length < 2 ? "Title too Short" : null),
+      title: (value) => (value.trim().length < 2 ? "Title too Short" : null),
       desc: (value) =>
-        value.length < 2 ? "Please add more description" : null,
+        value.trim().length < 2 ? "Please add more description" : null,
     },
   });
 

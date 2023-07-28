@@ -30,7 +30,7 @@ const Dashboard = () => {
     initialValues: { name: "" },
 
     validate: {
-      name: (value) => (value.length < 2 ? "Title too Short" : null),
+      name: (value) => (value.trim().length < 2 ? "Title too Short" : null),
     },
   });
 
@@ -69,7 +69,6 @@ const Dashboard = () => {
 
   const UpdateUserName = async (value) => {
     setLoading(true);
-    console.log(value);
     try {
       const { data } = await axios.put(`${SERVER_URL}/profile/${user.id}`, {
         name: value.name,
