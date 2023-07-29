@@ -63,14 +63,19 @@ const BlogCard = ({
   });
 
   const deletePost = (postId) => {
-    try {
-      axios.delete(`${SERVER_URL}/blogs/${postId}`);
-      alert("Blog deleted successfully");
-      // window.location.reload();
-      getBlogs();
-    } catch (error) {
-      console.log(error);
-      alert("Error deleting blog");
+    var answer = window.confirm("Do you want delete this post?");
+    if (answer) {
+      try {
+        axios.delete(`${SERVER_URL}/blogs/${postId}`);
+        alert("Blog deleted successfully");
+        // window.location.reload();
+        getBlogs();
+      } catch (error) {
+        console.log(error);
+        alert("Error deleting blog");
+      }
+    } else {
+      return;
     }
   };
 
