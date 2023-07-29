@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { Button } from "@mantine/core";
+import { Button, Skeleton } from "@mantine/core";
 import ScreenTabs from "../components/ScreenTabs";
 import { IconEdit } from "@tabler/icons-react";
 import AddBlog from "../components/AddBlog";
@@ -118,9 +118,20 @@ const Dashboard = () => {
           >
             <h3>
               <b>Welcome</b>{" "}
-              <span className="text-primary fw-semibold">{user.name},</span>
+              {!loading && (
+                <span className="text-primary fw-semibold">{user.name}</span>
+              )}
             </h3>
           </Tooltip.Floating>
+          {loading && (
+            <Skeleton
+              height={20}
+              mt={6}
+              width="20vw"
+              radius="md"
+              className="ms-3"
+            />
+          )}
           <ActionIcon
             className="ms-2"
             onClick={() => {
